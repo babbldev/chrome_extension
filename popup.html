@@ -1,0 +1,219 @@
+<!doctype html>
+
+<head>
+    <link rel="shortcut icon" href="https://babbl.dev/static/favicon.ico">
+    <script src="content/result_listener.js"></script>
+</head>
+
+<style>
+    html {
+        min-width: 600px;
+        min-height: 400px;
+    }
+    .btn-block {
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-size: 15pt;
+        background-color: #2ea44f;
+        border: 1px solid #2ea44f;
+        border-radius: 3px;
+        padding: 5px;
+        margin-top: 10px;
+        margin-top: 15px;
+        color: white;
+    }
+    .btn-block:hover {
+        background-color: #2ea44f;
+        filter: brightness(90%);
+    }
+    #signin-form {
+        width: 380px;
+        margin: 0 auto;
+        padding: 20px;
+        height: 200px;
+        background-color: rgb(243, 243, 243);
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    body {
+        background: url("https://babbl.dev/static/background2.jpg") no-repeat center center scroll; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: auto;
+        min-width: 600px;
+    }
+    #header{
+        text-overflow: ellipsis;
+        font-size: 20pt;
+        text-align: center;
+        font-weight: 700;
+        height: 100px;
+        color: white;
+        margin-bottom: 30px;
+    }
+    #filtered_sentences {
+        border-color: black;
+        border-radius: 3px;
+        border: solid 2px;
+        width: 50%;
+        padding: 5px;
+        height: 80%;
+        background-color: white;
+    }
+    #results {
+        width: 49%;
+        right: 0;
+        position: absolute;
+    }
+    .progressBar {
+        width: 80%;
+        height: 30px;
+        background-color: black;
+        border-radius: 3px;
+        margin: 10px;
+    }
+    .barFill {
+        height: 30px;
+        background-color: blue;
+        color: white;
+    }
+    #tickers {
+        color: white;
+        height: 20px;
+        width: 100%;
+        text-align: center;
+    }
+    #left {
+        width: 45%;
+        left: 0;
+        position: absolute;
+    }
+    .signinBar {
+        color: white;
+        right: 0;
+        top: 0;
+        position: absolute;
+    }
+    a {
+        color: white;
+    }
+    
+    .switch {
+        position: fixed;
+        display: inline-block;
+        width: 4em;
+        height: 1.5em;
+    }
+
+    .switch input { display: none; }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: white;
+        box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
+        transition: 0.2s;
+        border-radius: 99999px;
+    }
+
+    .slider::before {
+        position: absolute;
+        content: "";
+        height: 0.75em;
+        width: 0.75em;
+        left: 0.45em;
+        bottom: 0.45em;
+        background-color: white;
+        box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
+        transition: 0.2s;
+        border-radius: 50%;
+    }
+
+    input:checked + .slider {
+        background-color: #27AAE1;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider::before {
+        transform: translateX(2.3em);
+    }
+
+    .slider::after {
+        content: 'Off';
+        color: black;
+        display: block;
+        position: absolute;
+        transform: translate(-50%,-50%);
+        transition: 0.2s;
+        top: 50%;
+        left: 50%;
+        font-size: 0.7em;
+        font-family: Verdana, sans-serif;
+    }
+
+    input:checked + .slider::after {  
+        content: 'On';
+        color: white;
+    }
+
+    .bottom-right {
+        width: 30%;
+        height: 30px;
+        position:fixed;
+        bottom: 5%;
+        right: 5%;
+        align-items: right;
+    }
+    .setting-text {
+        color: white;
+        font-size: 12pt;
+    }
+</style>
+
+<body>
+    <img src="https://babbl.dev/static/favicon.ico" width="30px">
+    <div id="signin-form">
+        <label class="label" for="username">Username</label>
+        <input id="username" class="input-field"></input>
+        <input type="submit" id="signin2" name="commit" value="Sign in" class="label btn-block" data-disable-with="Signing in…">
+        <script src="content/signin.js"></script>
+    </div>
+
+    <div id="signedIn" style="display: none; padding: 30px;">
+        <div class="signinBar">
+            Signed in as: <div id="signedInUser"></div><br>
+            View my <a href="https://babbl.dev/login" target="_blank" rel="noopener noreferrer">Dashboard</a>
+        </div>
+        <br>
+        <div id="header">Analyze an Article to display data</div>
+        <div id="tickers"></div>
+        <div id="results">
+            <div class="progressBar"><div id="opt" class="barFill">Optimism: </div></div>
+            <div class="progressBar"><div id="pess" class="barFill">Pessimism</div></div>
+        </div>
+
+        <div id="left">
+            <div class="progressBar"><div id="speculative" class="barFill">Speculative</div></div>
+            <div class="progressBar"><div id="reactive" class="barFill">Reactive</div></div>
+        </div>
+        
+        <div id="filtered_sentences" style="display: none"></div>
+
+        <div class="bottom-right">
+            <div class="setting-text">Notifications: </div>
+            <label class="switch"><input type="checkbox" id="togBtn">
+                <div class="slider round"></div>
+            </label>
+        </div>
+
+    </div>
+</body>
