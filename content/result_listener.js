@@ -1,4 +1,20 @@
 /* result_listener.js */
+
+function getTickHTML(tick) {
+    var newDiv = document.createElement("div");
+    newDiv.classList.add("ticker");
+    newDiv.id = tick;
+    newDiv.innerText = tick;
+    return newDiv
+}
+var openURL =function () {
+    // open url for company?ticker
+    var tick = this.getAttribute('id');
+    console.log(tick);
+    var url = "https://babbl.dev/company?ticker="+tick;
+    window.open(url, "_blank");
+}
+
 // Runs in popup, displays data from newest request
 chrome.runtime.sendMessage({'type': "get_results"}, function (response) {
     var response_json = JSON.parse(response.local_data);
@@ -24,7 +40,17 @@ chrome.runtime.sendMessage({'type': "get_results"}, function (response) {
     document.getElementById("header").innerText = response_json["title"];
 
     // Tickers
-    document.getElementById("tickers").innerText = response_json["tickers"];
+    //document.getElementById("tickers").innerText = response_json["tickers"];
+    for (i=0; i<response_json["tickers"].length && i<8;i++) {
+        tick = response_json["tickers"][i];
+        var newDiv = getTickHTML(tick);
+        newDiv.addEventListener('click', openURL, false);
+        document.getElementById("tickers").appendChild(newDiv);
+        if (i===0) {
+            console.log(getTickHTML(tick));
+            console.log(response_json["tickers"].length);
+        }
+    }
 });
 chrome.runtime.sendMessage({type: "clear_badge"}, function (response) {});
 window.addEventListener('DOMContentLoaded', (e) => {

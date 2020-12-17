@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
-    "name": "babbl browser extension",
-    "version": "1.0",
-    "description": "Get analysis of your financial news.",
+    "name": "babbl for Investors",
+    "version": "0.0.01",
+    "description": "Get impactful analysis of your financial news.",
     "permissions": [
         "contextMenus",
         "tabs",

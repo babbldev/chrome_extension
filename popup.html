@@ -81,9 +81,10 @@
     }
     #tickers {
         color: white;
-        height: 20px;
+        height: 40px;
         width: 100%;
         text-align: center;
+        display:flex;
     }
     #left {
         width: 45%;
@@ -177,6 +178,19 @@
         color: white;
         font-size: 12pt;
     }
+    .ticker {
+        background-color: white;
+        border-radius: 5px;
+        border: solid black 2px;
+        height: 20px;
+        width: 40px;
+        margin: 3px;
+        color: black;
+    }
+    .ticker:hover {
+        background-color: black;
+        color: white;
+    }
 </style>
 
 <body>
@@ -195,7 +209,7 @@
         </div>
         <br>
         <div id="header">Analyze an Article to display data</div>
-        <div id="tickers"></div>
+        <div id="tickers"><div style="font-size: 15pt">Tickers:</div></div>
         <div id="results">
             <div class="progressBar"><div id="opt" class="barFill">Optimism: </div></div>
             <div class="progressBar"><div id="pess" class="barFill">Pessimism</div></div>
