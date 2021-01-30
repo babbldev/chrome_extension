@@ -34,5 +34,17 @@ function loggedIn() {
         document.getElementById("signedIn").style.display = "";
         document.getElementById("signedInUser").innerText = results.username;
         document.getElementById("signin-form").style.display = "none";
+
+        /* Send welcome email */
+        // Setup HTTP request
+        var babblHttp = new XMLHttpRequest();
+        var url='http://127.0.0.1:8080/api/v1/user_request';
+
+        babblHttp.open("POST", url);
+        babblHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        babblHttp.send(JSON.stringify({
+            "firstname": results.username, 
+            "subject": "User Signed in from chrome ext! Woo!"
+        })); 
     });
 }
