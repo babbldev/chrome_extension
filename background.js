@@ -70,6 +70,7 @@ contextMenus.createFirst =
         }
     );
 
+/*
 contextMenus.filterPage = 
     chrome.contextMenus.create(
         {
@@ -81,6 +82,7 @@ contextMenus.filterPage =
             }
         }
     );
+*/
 
 /**
  * This attached the actual code we need to run to the context menu
@@ -96,13 +98,16 @@ function contextMenuHandler(info, tab) {
         chrome.tabs.executeScript({
             file: 'content/content.js'
         });
-    } else if(info.menuItemId===contextMenus.filterPage) {
+    } 
+    /*
+    else if(info.menuItemId===contextMenus.filterPage) {
         // Sends text to backend to filter to high-value
         // sentences
         chrome.tabs.executeScript({
             file: 'content/filter_article.js'
         });
     }
+    */
 }
 // Setup result popup
 // Messaging for results popups

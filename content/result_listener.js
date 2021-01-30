@@ -10,7 +10,6 @@ function getTickHTML(tick) {
 var openURL =function () {
     // open url for company?ticker
     var tick = this.getAttribute('id');
-    console.log(tick);
     var url = "https://babbl.dev/company?ticker="+tick;
     window.open(url, "_blank");
 }
