@@ -5,12 +5,9 @@
     "description": "Get impactful analysis of your financial news.",
     "permissions": [
         "contextMenus",
-        "tabs",
         "storage", 
-        "activeTab",
-        "declarativeContent",
-        "notifications",
-        "management"
+        "notifications", 
+        "activeTab"
     ],
     "background": {
         "page": "background.html",
