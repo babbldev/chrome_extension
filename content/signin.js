@@ -10,17 +10,31 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function saveChanges() {
     // Get a value saved in a form.
-    var theValue = document.getElementById("username").value;
+    var theValue = document.getElementById("auth-code").value;
     // Check that there's some code there.
     if (!theValue) {
         console.log('Error: No value specified');
         return;
     }
-    // Save it using the Chrome extension storage API.
-    chrome.storage.sync.set({username: theValue}, function() {
-        // Notify that we saved.
-        loggedIn();
-    });
+
+    var babblHttp2 = new XMLHttpRequest();
+    var url='https://babbl.dev/api/v1/check_auth_code?auth_code=' + theValue;
+
+    babblHttp2.onreadystatechange =  function() {
+        if (this.readyState == 4 && this.status == 200) {
+            resp = JSON.parse(this.responseText);
+            user_email=resp["user_email"];
+            // Save it using the Chrome extension storage API.
+            chrome.storage.sync.set({username: user_email}, function() {
+                // Notify that we saved.
+                loggedIn();
+            });
+        }
+    };
+    babblHttp2.open("GET", url);
+    babblHttp2.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    babblHttp2.send()
+    
 }
 function testChanges() {
     // Test sync storage
@@ -38,7 +52,7 @@ function loggedIn() {
         /* Send welcome email */
         // Setup HTTP request
         var babblHttp = new XMLHttpRequest();
-        var url='http://127.0.0.1:8080/api/v1/user_request';
+        var url='https://babbl.dev/api/v1/user_request';
 
         babblHttp.open("POST", url);
         babblHttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
