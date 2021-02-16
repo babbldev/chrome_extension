@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "babbl for Investors",
-    "version": "0.0.01",
+    "version": "0.0.02",
     "description": "Get impactful analysis of your financial news.",
     "permissions": [
         "contextMenus",
